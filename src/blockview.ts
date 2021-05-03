@@ -97,8 +97,8 @@ export class LineView extends ContentView implements BlockView {
     }
     super.sync(track)
     let last = this.dom!.lastChild
-    if (!last || (last.nodeName != "BR" && (ContentView.get(last) instanceof WidgetView))) {
-      let hack = document.createElement("BR")
+    if (!last || ((last as Element).localName !== "br" && (ContentView.get(last) instanceof WidgetView))) {
+      let hack = document.createElement("br")
       ;(hack as any).cmIgnore = true
       this.dom!.appendChild(hack)
     }

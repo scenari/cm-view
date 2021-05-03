@@ -155,7 +155,7 @@ class DOMReader {
       if (next == end) break
       let view = ContentView.get(cur), nextView = ContentView.get(next!)
       if ((view ? view.breakAfter : isBlockElement(cur)) ||
-          ((nextView ? nextView.breakAfter : isBlockElement(next!)) && !(cur.nodeName == "BR" && !(cur as any).cmIgnore)))
+          ((nextView ? nextView.breakAfter : isBlockElement(next!)) && !((cur as Element).localName === "br" && !(cur as any).cmIgnore)))
         this.text += this.lineBreak
       cur = next!
     }
@@ -169,7 +169,7 @@ class DOMReader {
     let text: string | undefined
     if (fromView != null) text = fromView.sliceString(0, undefined, this.lineBreak)
     else if (node.nodeType == 3) text = node.nodeValue!
-    else if (node.nodeName == "BR") text = node.nextSibling ? this.lineBreak : ""
+    else if ((node as Element).localName === "br") text = node.nextSibling ? this.lineBreak : ""
     else if (node.nodeType == 1) this.readRange(node.firstChild, null)
 
     if (text != null) {
@@ -196,7 +196,7 @@ class DOMReader {
 }
 
 function isBlockElement(node: Node): boolean {
-  return node.nodeType == 1 && /^(DIV|P|LI|UL|OL|BLOCKQUOTE|DD|DT|H\d|SECTION|PRE)$/.test(node.nodeName)
+  return node.nodeType == 1 && /^(div|p|li|ul|ol|blockquote|dd|dt|h\d|section|pre)$/.test((node as Element).localName)
 }
 
 class DOMPoint {

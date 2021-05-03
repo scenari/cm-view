@@ -125,5 +125,5 @@ class NullWidget extends WidgetType {
   constructor(readonly tag: string) { super() }
   eq(other: NullWidget) { return other.tag == this.tag }
   toDOM() { return document.createElement(this.tag) }
-  updateDOM(elt: HTMLElement) { return elt.nodeName.toLowerCase() == this.tag }
+  updateDOM(elt: HTMLElement) { return elt.localName === this.tag }
 }

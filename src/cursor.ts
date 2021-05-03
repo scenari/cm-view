@@ -181,7 +181,7 @@ function isSuspiciousCaretResult(node: Node, offset: number, x: number) {
   let len
   if (node.nodeType != 3 || offset != (len = node.nodeValue!.length)) return false
   for (let next = node.nextSibling; next; next = node.nextSibling)
-    if (next.nodeType != 1 || next.nodeName != "BR") return false
+    if (next.nodeType != 1 || (next as Element).localName !== "br") return false
   return textRange(node as Text, len - 1, len).getBoundingClientRect().left > x
 }
 
